@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phonebookfortheelderly/common/v_colors.dart';
+import 'package:phonebookfortheelderly/pages/home/widgets/home_page_item.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,12 +16,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('老年人专用手机通讯录'),
-        actions: <Widget>[IconButton(icon: Icon(Icons.menu), onPressed: null)],
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+              onPressed: null)
+        ],
       ),
       body: Container(
-        color: Colors.grey,
+        color: VColors.bgColor,
         child: PageView.builder(
             scrollDirection: Axis.horizontal,
+            itemCount: pageList.length,
             controller: PageController(viewportFraction: 0.9),
             itemBuilder: (context, index) {
               return pageList[index];
@@ -32,15 +42,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     for (var i = 0; i < 3; i++) {
-      pageList.add(_createPageItem());
+      pageList.add(HomePageItem());
     }
-  }
-
-  Widget _createPageItem() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(45)),
-          color: Colors.white),
-    );
   }
 }
