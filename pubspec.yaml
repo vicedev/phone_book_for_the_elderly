@@ -25,6 +25,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   # 打电话发短信啥的
   url_launcher: ^5.5.0
+  # sp
+  shared_preferences: ^0.5.8
+  # 调用系统相册/拍照啥的
+  image_picker: ^0.6.7+4
+  # 获取应用存储路径
+  path_provider: ^1.6.11
 
 dev_dependencies:
   flutter_test:

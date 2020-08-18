@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:phonebookfortheelderly/common/v_colors.dart';
 import 'package:phonebookfortheelderly/pages/home/widgets/home_page_item.dart';
 
+/// 首页
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
