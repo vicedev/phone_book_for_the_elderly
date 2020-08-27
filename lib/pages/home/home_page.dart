@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phonebookfortheelderly/common/contact_model.dart';
+import 'package:phonebookfortheelderly/common/data_utils.dart';
+import 'package:phonebookfortheelderly/common/route_constant.dart';
 import 'package:phonebookfortheelderly/common/v_colors.dart';
 import 'package:phonebookfortheelderly/pages/home/widgets/home_page_item.dart';
+import 'package:uuid/uuid.dart';
 
 /// 首页
 class HomePage extends StatefulWidget {
@@ -10,7 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> pageList = [];
+  List<HomePageItem> pageList = [];
+  List<ContactModel> dataModelList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: VColors.bgColor,
-        child: PageView.builder(
+        child: (pageList == null || pageList.length == 0)
+            ? Center(
+          child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteConstant.add);
+              }),
+        )
+            : PageView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: pageList.length,
             controller: PageController(viewportFraction: 0.9),
@@ -42,8 +55,21 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 3; i++) {
-      pageList.add(HomePageItem());
+//    for (var i = 0; i < 3; i++) {
+//      DataModel dataModel = DataModel(Uuid().v1());
+//      dataModelList.add(dataModel);
+//      pageList.add(HomePageItem(dataModel));
+//    }
+    _refreshData();
+  }
+
+  _refreshData() async {
+    List<ContactModel> contacts = await DataUtils.queryAll();
+    if (contacts != null) {
+      contacts.forEach((contact) {
+        dataModelList.add(contact);
+        pageList.add(HomePageItem(contact));
+      });
     }
   }
 }

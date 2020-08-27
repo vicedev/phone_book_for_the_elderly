@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:phonebookfortheelderly/common/log_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
@@ -11,7 +12,7 @@ class Utils {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      print('Could not launch $url');
+      LogUtils.d('could not launch $url');
     }
   }
 
@@ -19,7 +20,7 @@ class Utils {
   static Future<PickedFile> pickImage() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    print("vvv" + pickedFile.path);
+    LogUtils.d("pickImage：" + pickedFile.path);
     return pickedFile;
   }
 
@@ -50,7 +51,7 @@ class Utils {
     }
     File file = await copyFile(filePath, newFilePath);
     if (file != null && file.path != null && file.path.isNotEmpty) {
-      print('vvv' + file.path);
+      LogUtils.d('copyAvatar：' + file.path);
       return file;
     } else {
       return null;

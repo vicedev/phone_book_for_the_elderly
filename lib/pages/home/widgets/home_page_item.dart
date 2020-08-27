@@ -2,16 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:phonebookfortheelderly/common/contact_model.dart';
 import 'package:phonebookfortheelderly/common/utils.dart';
 
 class HomePageItem extends StatefulWidget {
+  final ContactModel dataModel;
+
+  HomePageItem(this.dataModel);
+
   @override
   _HomePageItemState createState() => _HomePageItemState();
 }
 
 class _HomePageItemState extends State<HomePageItem> {
-  File avatarFile;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +30,10 @@ class _HomePageItemState extends State<HomePageItem> {
                     child: Stack(
                   children: <Widget>[
                     //头像布局
-                    _createAvatar(avatarFile),
+                    _createAvatar((widget.dataModel.avatar == null ||
+                            widget.dataModel.avatar.isEmpty)
+                        ? null
+                        : File(widget.dataModel.avatar)),
                     Positioned(
                       child: Container(
                         padding: EdgeInsets.all(10),
@@ -111,7 +117,7 @@ class _HomePageItemState extends State<HomePageItem> {
       File avatar = await Utils.copyAvatar(file.path);
       if (avatar != null) {
         setState(() {
-          avatarFile = avatar;
+          widget.dataModel.avatar = avatar.path;
         });
       }
     }
